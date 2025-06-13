@@ -11,7 +11,7 @@ let panel: vscode.WebviewPanel | undefined;
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-  const engineDir = path.join(context.extensionPath, "dist"); // 引擎目录
+  const engineDir = path.join(context.extensionPath, "qmlEngine"); // 引擎目录
   const prefix = "/qml"; // 路由前缀
   let server: Server;
   let qmlDir: string; // 工作区目录如果打开的是单文件则取文件所在目录
