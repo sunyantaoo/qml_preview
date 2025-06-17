@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 
-  const disposable = vscode.commands.registerCommand('qml-preview.helloWorld', () => {
+  const disposable = vscode.commands.registerCommand('qt.qml-previewer.preview', () => {
 
     // 文档切换 判断是否要切换服务器
     let onDocumentChanged = vscode.window.onDidChangeActiveTextEditor(editor => {

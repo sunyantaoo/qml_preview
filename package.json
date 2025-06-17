@@ -1,8 +1,8 @@
 {
-  "name": "qml-preview",
-  "displayName": "QML Preview",
+  "name": "qml-previewer",
+  "displayName": "QML Previewer",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "sunyantao",
   "icon": "./res/logo256.png",
   "engines": {
@@ -24,15 +24,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "qml-preview.helloWorld",
-        "title": "QMLPreview:Hello World",
-        "icon": "./res/logo64.png"
+        "command": "qt.qml-previewer.preview",
+        "title": "Preview QML File",
+        "icon": "./res/logo64.png",
+        "category": "Qt"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "qml-preview.helloWorld",
+          "command": "qt.qml-previewer.preview",
           "group": "navigation",
           "when": "editorLangId==qml"
         }
