@@ -1,6 +1,7 @@
 # qml-previewer README
 
-use qt6 webassembly preview qml file
+use qt6 webassembly preview qml file\
+auto refresh when qml file saved
 
 ## support qt modules
 * Qt Core
@@ -15,3 +16,8 @@ use qt6 webassembly preview qml file
 * Qt OpenGL
 * Qt SVG
 * Qt WebSockets
+
+## package
+
+```
+npx vsce package

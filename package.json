@@ -2,11 +2,11 @@
   "name": "qml-previewer",
   "displayName": "QML Previewer",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "sunyantao",
   "icon": "./res/logo256.png",
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.96.0"
   },
   "repository": {
     "type": "github",
@@ -52,7 +52,7 @@
     "@types/express": "^5.0.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "^1.100.0",
+    "@types/vscode": "^1.96.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vscode/test-cli": "^0.0.10",
