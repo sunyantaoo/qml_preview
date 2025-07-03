@@ -115,26 +115,33 @@ export function activate(context: vscode.ExtensionContext) {
       docPath = newDocPath;
     });
 
+    var currentEditor = vscode.window.activeTextEditor;
+    let currentDoc = currentEditor?.document;
+    if (currentDoc !== undefined && currentDoc.languageId == "qml") {
 
-    let doc = vscode.window.activeTextEditor?.document;
-    if (doc !== undefined && doc.languageId == "qml") {
-
-      let ws = vscode.workspace.getWorkspaceFolder(doc.uri);
+      let ws = vscode.workspace.getWorkspaceFolder(currentDoc.uri);
       if (ws === undefined) {
-        qmlDir = path.dirname(doc.fileName);
-        docPath = path.relative(qmlDir, doc.fileName);
+        qmlDir = path.dirname(currentDoc.fileName);
+        docPath = path.relative(qmlDir, currentDoc.fileName);
       }
       else {
         qmlDir = ws.uri.fsPath;
-        docPath = path.relative(qmlDir, doc.fileName)
+        docPath = path.relative(qmlDir, currentDoc.fileName)
       }
 
       server = createServer(qmlDir);
       if (panel === undefined) {
-        panel = vscode.window.createWebviewPanel("qml_previewer", path.basename(doc.fileName), vscode.ViewColumn.Beside,
+        panel = vscode.window.createWebviewPanel("qml_previewer", path.basename(currentDoc.fileName),
           {
-            enableScripts: true
+            viewColumn: vscode.ViewColumn.Beside,
+            preserveFocus: true
+          },
+          {
+            enableScripts: true,
           });
+        panel.onDidChangeViewState(() => {
+          vscode.commands.executeCommand('workbench.action.focusFirstEditorGroup');
+        });
       }
 
       loadQml(docPath);
