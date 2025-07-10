@@ -2,8 +2,11 @@ out
 dist
 node_modules
 .vscode
+.vs
 .vscode-test/
 *.vsix
 
 # Env section
 .venv
+
+CMakePresets.json
