@@ -1,7 +1,4 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(QMLWebEngine LANGUAGES CXX)
-
-find_package(Qt6 REQUIRED COMPONENTS Quick  Quick3D Core5Compat OpenGL  Graphs Svg WebSockets) 
-
+project(qml-preview)
 add_subdirectory("QMLWebEngine")

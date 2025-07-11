@@ -1,5 +1,7 @@
 set(TARGET_NAME QMLWebEngine)
 
+find_package(Qt6 REQUIRED COMPONENTS Quick  Quick3D Core5Compat OpenGL  Graphs Svg WebSockets) 
+
 qt_standard_project_setup()
 qt_add_executable(${TARGET_NAME}  main.cpp)
 qt_add_qml_module(${TARGET_NAME} 
