@@ -56,8 +56,9 @@ ApplicationWindow {
             Rectangle {
                 id: content_row
                 SplitView.fillHeight: true
-                Text {
-                    text: "This is Context"
+                Graphic {
+                    width: parent.width
+                    height:parent.height
                 }
             }
 

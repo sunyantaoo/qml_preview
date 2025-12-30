@@ -1,0 +1,10 @@
+module example
+Circles 1.0 Circles.qml
+CompatibilityEffect 1.0 CompatibilityEffect.qml
+ConanCheatsheet 1.0 ConanCheatsheet.qml
+CubicWave 1.0 CubicWave.qml
+Graphic 1.0 Graphic.qml
+Logo 1.0 Logo.qml
+QtQuick3D 1.0 QtQuick3D.qml
+Rectangles 1.0 Rectangles.qml
+SplitGrid 1.0 SplitGrid.qml

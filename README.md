@@ -1,7 +1,8 @@
 # qml-previewer README
 
-use qt6 webassembly preview qml file\
-auto refresh when qml file saved
+## use qt6 webassembly preview qml file
+* auto refresh when qml file saved
+* auto generate qmldir file
 
 ## support qt modules
 * Qt Core

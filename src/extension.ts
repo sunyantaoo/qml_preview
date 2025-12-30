@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
-import express from 'express'
-import path from 'path'
-import { Server } from 'http'
-import { AddressInfo } from 'net'
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import { Server } from 'http';
+import { AddressInfo } from 'net';
 
 
 let panel: vscode.WebviewPanel | undefined;
@@ -17,6 +18,31 @@ export function activate(context: vscode.ExtensionContext) {
   let qmlDir: string; // 工作区目录如果打开的是单文件则取文件所在目录
   let docPath: string; // 当前文档相对工作区的路径
 
+  // 创建qmldir文件
+  function reset_qmldir_file(qmlDir: string) {
+    let files = fs.readdirSync(qmlDir, { withFileTypes: true, recursive: true });
+
+    var dest = path.join(qmlDir, "qmldir");
+    if (fs.existsSync(dest)) {
+      fs.rmSync(dest);
+    }
+
+    let result: string = `module ${path.basename(qmlDir)}\n`;
+    for (let item of files) {
+      if (item.isFile() && item.name.endsWith(".qml")) {
+        let pathString = path.join(item.parentPath, item.name);
+        let filePath = path.parse(pathString);
+
+        result += `${filePath.name} 1.0 ${path.relative(qmlDir, pathString)}\n`;
+      }
+    }
+    // 写qmldir文件
+    fs.writeFile(path.join(qmlDir, "qmldir"), result,
+      { encoding: "utf8", flag: "w" },
+      err => { console.log(err) }
+    );
+  }
+
   function createServer(qmlDir: string): Server {
     let app = express();
     app.use(express.static(engineDir));
@@ -28,7 +54,6 @@ export function activate(context: vscode.ExtensionContext) {
     if (server === undefined || panel == undefined) return;
     var address = server.address() as AddressInfo;
     panel.title = path.basename(qmlPath);
-
     panel.webview.html = "";
     panel.webview.html = `<!DOCTYPE html>
 									          <html lang="en-us">
@@ -46,7 +71,6 @@ export function activate(context: vscode.ExtensionContext) {
                               </body>
                             </html>`;
   }
-
 
 
 
@@ -73,6 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
       // 服务地址变动重启服务器
       if (newQmlDir !== qmlDir) {
         server?.close();
+        reset_qmldir_file(newQmlDir);
         server = createServer(newQmlDir);
       }
 
@@ -105,6 +130,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // 服务地址变动重启服务器
       if (newQmlDir !== qmlDir) {
+        reset_qmldir_file(newQmlDir);
         server?.close();
         server = createServer(newQmlDir);
       }
@@ -117,7 +143,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     var currentEditor = vscode.window.activeTextEditor;
     let currentDoc = currentEditor?.document;
-    if (currentDoc !== undefined && currentDoc.languageId == "qml") {
+    if (currentDoc !== undefined && currentDoc.languageId === "qml") {
 
       let ws = vscode.workspace.getWorkspaceFolder(currentDoc.uri);
       if (ws === undefined) {
@@ -126,9 +152,10 @@ export function activate(context: vscode.ExtensionContext) {
       }
       else {
         qmlDir = ws.uri.fsPath;
-        docPath = path.relative(qmlDir, currentDoc.fileName)
+        docPath = path.relative(qmlDir, currentDoc.fileName);
       }
 
+      reset_qmldir_file(qmlDir);
       server = createServer(qmlDir);
       if (panel === undefined) {
         panel = vscode.window.createWebviewPanel("qml_previewer", path.basename(currentDoc.fileName),
@@ -151,7 +178,7 @@ export function activate(context: vscode.ExtensionContext) {
         panel = undefined;
         onDocumentSaved?.dispose();
         onDocumentChanged?.dispose();
-      })
+      });
     }
   });
 

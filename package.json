@@ -2,7 +2,7 @@
   "name": "qml-previewer",
   "displayName": "QML Previewer",
   "description": "",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "sunyantao",
   "icon": "./res/logo256.png",
   "engines": {
